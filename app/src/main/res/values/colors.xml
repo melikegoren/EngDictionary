@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="viridian1">#6A8E7F</color>
+    <color name="viridian2">#5F8173</color>
+    <color name="ash_gray">#B9CBC3</color>
+    <color name="ash_gray2">#B9CBC3</color>
+    <color name="white_smoke">#F3F6F5</color>
+    <color name="platinum">#DCE5E2</color>
+    <color name="ecru">#BFA473</color>
+    <color name="ecru2">#C5AD81</color>
+    <color name="raisin_black">#28282A</color>
+    <color name="onyx">#3C3C3E</color>
+    <color name="bone">#ECE4D5</color>
+    <color name="gray">#747578</color>
+
+</resources>
