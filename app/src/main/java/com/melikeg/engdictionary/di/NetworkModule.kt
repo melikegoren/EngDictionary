@@ -2,7 +2,6 @@ package com.melikeg.engdictionary.di
 
 import com.melikeg.engdictionary.common.Constants
 import com.melikeg.engdictionary.data.api.DictionaryApiService
-import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,9 +21,9 @@ object NetworkModule {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(ResultCallAdapterFactory.create())
             .build()
             .create(DictionaryApiService::class.java)
+
 
 
 }

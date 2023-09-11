@@ -12,7 +12,7 @@ class RemoteDataSourceImpl @Inject constructor(
 ): RemoteDataSource {
     override suspend fun getWord(word: String): NetworkResponse<WordItem> =
         try {
-            val response = dictionaryApi.getWord(word).toWordItem()
+            val response = dictionaryApi.getWord(word)[0].toWordItem()
             NetworkResponse.Success(response)
         }catch (e: Exception){
             NetworkResponse.Error(e)

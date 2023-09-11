@@ -5,7 +5,9 @@ import android.text.SpannableStringBuilder
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 
@@ -36,4 +38,15 @@ fun TextView.spannable(fullText: String, clickableText: String, direction: NavDi
     this.text = spannableStringBuilder
     this.movementMethod = android.text.method.LinkMovementMethod.getInstance()
 
+}
+
+
+fun View.slideLeft(animTime: Long, startOffSet: Long){
+    val slideLeft = AnimationUtils.loadAnimation(context, R.anim.slide_left).apply {
+        duration = animTime
+        interpolator = FastOutLinearInInterpolator()
+        this.startOffset = startOffset
+    }
+
+    startAnimation(slideLeft)
 }
