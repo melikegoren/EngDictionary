@@ -11,7 +11,7 @@ fun WordResponseItem.toWordItem(): WordItem{
     return WordItem(
         word = word,
         meanings = meanings,
-        phonetic = phonetics[0],
+        phonetics = phonetics,
         sourceUrl = sourceUrls[0]
     )
 

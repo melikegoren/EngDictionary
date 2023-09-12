@@ -3,6 +3,7 @@ package com.melikeg.engdictionary.presentation.home
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.melikeg.engdictionary.R
 import com.melikeg.engdictionary.databinding.FragmentHomeBinding
+import com.melikeg.engdictionary.presentation.adapters.ExamplePagerAdapter
 import com.melikeg.engdictionary.presentation.adapters.MeaningPagerAdapter
+import com.melikeg.engdictionary.showCustomToast
 import com.melikeg.engdictionary.slideLeft
 import com.melikeg.engdictionary.spannable
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,19 +62,58 @@ class HomeFragment: Fragment() {
             viewModel.wordDataUiState.observe(viewLifecycleOwner){
                 when(it){
                     is HomeUiState.Loading -> {}
-                    is HomeUiState.Error -> {Toast.makeText(requireContext(), "Error occurred.", Toast.LENGTH_LONG).show()}
+                    is HomeUiState.Error -> {requireContext().showCustomToast("Invalid word.", R.drawable.baseline_warning_amber_24)}
                     is HomeUiState.Success -> {
                         binding.tvWord.slideLeft(500L,0)
                         binding.cvPhonetic.slideLeft(500L,0)
                         binding.cvMeanings.slideLeft(500L,0)
-                        binding.tvWord.text = it.data.word
-                        binding.tvPhonetic.text = it.data.phoneticText
+                        binding.cvExamples.slideLeft(500L,0)
 
-                        //Log.d("sizee", it.data.definitions.size.toString())
-                        //Log.d("mean1", it.data.definitions.get(1).get(1).definition.toString())
-                        //Log.d("antonyms", it.data.antonyms.get(1).toString())
-                        val adapter = MeaningPagerAdapter(childFragmentManager, it.data.meanings)
-                        binding.viewpagerMeanings.adapter = adapter
+                        binding.tvWord.text = it.data.word
+
+                        /*if(it.data.phoneticText.isEmpty()){
+                            binding.tvPhonetic.setTextSize(18f)
+                            binding.tvPhonetic.text = "Can't find any phonetic text."
+                        }
+
+                        else
+                            binding.tvPhonetic.text = it.data.phoneticText.get(0)*/
+                        Log.d("audioUrl", it.data.audioUrl.size.toString())
+                        Log.d("audioUrl", it.data.phoneticText.size.toString())
+
+                        var a = 0
+                        for(i in 0 until it.data.audioUrl.size){
+                            if(it.data.phoneticText[i].isNullOrEmpty() || it.data.audioUrl[i].isNullOrEmpty()){
+                                a++
+                                continue
+                            }
+                            else{
+                                binding.tvPhonetic.text = it.data.phoneticText[i]
+                                break
+                            }
+                        }
+
+                        Log.d("aaa", a.toString())
+                        if(a == it.data.audioUrl.size) {
+                            binding.tvPhonetic.text = "Can't find any phonetic transcription."
+                          /*  binding.tvPhonetic.textSize = 24f
+
+                            // SP birimini piksellere dönüştürmek için bir ölçek faktörü alın
+                            val scale = resources.displayMetrics.scaledDensity
+
+                            // SP birimini piksellere dönüştürün ve metin boyutunu ayarlayın
+                            val textSizeInPixels = (24f) * scale
+                            binding.tvPhonetic.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeInPixels)*/
+                        }
+
+                        binding.linearLayDef.visibility = View.GONE
+                        binding.linearLayDef2.visibility = View.GONE
+
+                        val adapterDefinition = MeaningPagerAdapter(childFragmentManager, it.data.meanings)
+                        binding.viewpagerMeanings.adapter = adapterDefinition
+
+                        val adapterExample = ExamplePagerAdapter(childFragmentManager, it.data.meanings)
+                        binding.viewpagerExamples.adapter = adapterExample
                     }
 
                 }
@@ -84,13 +126,19 @@ class HomeFragment: Fragment() {
                     is HomeUiState.Loading -> {}
                     is HomeUiState.Error -> {Toast.makeText(requireContext(), "Error occurred.", Toast.LENGTH_LONG).show()}
                     is HomeUiState.Success -> {
-                       preparingMediaPlayer(it.data.audioUrl)
 
+                           for(i in 0 until it.data.audioUrl.size){
+                               if(it.data.audioUrl[i].isNotEmpty()) {
+                                   preparingMediaPlayer(it.data.audioUrl[i])
+                                   break
+                               }
+                           }
                     }
-
-
                 }
             }
+
+            viewModel.wordDataUiState.removeObservers(viewLifecycleOwner)
+
         }
 
 
@@ -102,8 +150,10 @@ class HomeFragment: Fragment() {
         binding.tvMoreInfo.spannable(resources.getString(R.string.click_for_more_info),resources.getString(R.string.click_for_more_info), direction)
     }
 
-    fun preparingMediaPlayer(audioUrl: String){
-        mediaPlayer = MediaPlayer()
+
+    fun preparingMediaPlayer(audioUrl: String) {
+
+        val mediaPlayer = MediaPlayer()
 
         mediaPlayer.setAudioAttributes(
             AudioAttributes.Builder()
@@ -111,12 +161,14 @@ class HomeFragment: Fragment() {
                 .build()
         )
 
+
         mediaPlayer.setDataSource(audioUrl)
         mediaPlayer.prepareAsync()
 
-        mediaPlayer.setOnPreparedListener{
+        mediaPlayer.setOnPreparedListener {
             it.start()
         }
+        mediaPlayer.pause()
 
     }
 

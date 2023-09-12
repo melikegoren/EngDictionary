@@ -6,6 +6,6 @@ import com.melikeg.engdictionary.data.dto.Phonetic
 data class WordItem(
     val word: String,
     val meanings: List<Meaning>,
-    val phonetic: Phonetic,
+    val phonetics: List<Phonetic>,
     val sourceUrl: String
     )

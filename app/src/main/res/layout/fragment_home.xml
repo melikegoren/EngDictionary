@@ -9,8 +9,12 @@
     <EditText
         android:id="@+id/searchview"
         android:layout_width="@dimen/_244sdp"
-        android:layout_height="@dimen/_34sdp"
+        android:layout_height="@dimen/_36sdp"
         android:text=""
+        android:hint="Search for the word"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/raisin_black"
+        android:textAlignment="gravity"
         android:drawableStart="@drawable/baseline_search_24"
         android:padding="@dimen/_10sdp"
         app:queryHint="Search for the word..."
@@ -30,7 +34,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_go"
         android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_34sdp"
+        android:layout_height="@dimen/_36sdp"
         android:text="Go"
         android:fontFamily="sans-serif-condensed"
         android:textColor="@color/gray"
@@ -95,9 +99,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="həˈləʊ"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_24ssp"
+                        android:textSize="@dimen/_20ssp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -126,11 +129,14 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_meanings"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 app:layout_constraintTop_toBottomOf="@id/cv_phonetic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="@dimen/_10sdp"
+                app:layout_constraintBottom_toTopOf="@id/cv_examples"
                 app:strokeWidth="0dp"
                 app:cardCornerRadius="@dimen/_6sdp">
 
@@ -141,17 +147,41 @@
                         android:layout_height="match_parent"
                         android:background="@color/platinum">
 
+                        <LinearLayout
+                            android:id="@+id/linear_lay_def"
+                            android:layout_width="@dimen/_86sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:background="@drawable/cardview_top"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_definition"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Definitions"
+                                android:textColor="@color/raisin_black"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:layout_marginBottom="@dimen/_2sdp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:layout_gravity="center_horizontal"
+                                android:foregroundGravity="center_vertical"
+                                android:textSize="@dimen/_13ssp"/>
+                        </LinearLayout>
+
 
                         <androidx.viewpager.widget.ViewPager
                             android:id="@+id/viewpager_meanings"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="@+id/dots_layout"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
 
                         <LinearLayout
                             android:id="@+id/dots_layout"
@@ -166,22 +196,21 @@
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
             </com.google.android.material.card.MaterialCardView>
 
-
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cv_synonyms"
+                android:id="@+id/cv_examples"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_80sdp"
-                app:layout_constraintTop_toBottomOf="@id/cv_meanings"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:cardCornerRadius="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="@dimen/_10sdp"
-                app:strokeWidth="0dp"
-                app:cardCornerRadius="@dimen/_6sdp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_meanings"
+                app:strokeWidth="0dp">
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -189,8 +218,8 @@
                     android:background="@color/platinum">
 
                     <LinearLayout
-                        android:id="@+id/linear_lay_synonyms"
-                        android:layout_width="@dimen/_80sdp"
+                        android:id="@+id/linear_lay_def_2"
+                        android:layout_width="@dimen/_86sdp"
                         android:layout_height="@dimen/_25sdp"
                         android:background="@drawable/cardview_top"
                         app:layout_constraintStart_toStartOf="parent"
@@ -198,86 +227,48 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_synonyms"
+                            android:id="@+id/tv_examples"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Synonyms"
+                            android:text="Examples"
+                            android:textColor="@color/raisin_black"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
                             android:fontFamily="sans-serif-condensed"
                             android:layout_gravity="center_horizontal"
                             android:foregroundGravity="center_vertical"
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:layout_marginBottom="@dimen/_3sdp"
                             android:textSize="@dimen/_13ssp"/>
                     </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_synonyms"
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewpager_examples"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linear_lay_synonyms" />
-
-
-
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cv_antonyms"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_80sdp"
-                app:layout_constraintTop_toBottomOf="@id/cv_synonyms"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="@dimen/_10sdp"
-                app:strokeWidth="0dp"
-                app:cardCornerRadius="@dimen/_6sdp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/platinum">
-
-                    <LinearLayout
-                        android:id="@+id/linear_lay_antonyms"
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:background="@drawable/cardview_top"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_antonyms"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:layout_marginBottom="@dimen/_3sdp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:foregroundGravity="center_vertical"
-                            android:text="Antonyms"
-                            android:textSize="@dimen/_13ssp" />
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_antonyms"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_50sdp"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/dots_layout_2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linear_lay_antonyms" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <LinearLayout
+                        android:id="@+id/dots_layout_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+
+
 
            <androidx.appcompat.widget.AppCompatTextView
                android:id="@+id/tv_more_info"
@@ -286,12 +277,13 @@
                android:text="@string/click_for_more_info"
                android:textStyle="bold"
                android:textSize="@dimen/_14ssp"
+               android:textColor="@color/raisin_black"
                android:layout_marginTop="@dimen/_12sdp"
                android:layout_marginBottom="@dimen/_5sdp"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/cv_antonyms"
-               app:layout_constraintBottom_toBottomOf="parent"/>
+               app:layout_constraintTop_toBottomOf="@id/cv_examples"
+               app:layout_constraintBottom_toBottomOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.melikeg.engdictionary.presentation.home
 
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,11 +25,11 @@ class HomeViewModel @Inject constructor(
     val wordDataUiState: LiveData<HomeUiState<HomeUiData>> get() = _wordDataUiState
 
 
-    fun getWord(word: String){
+    fun getWord(word: String) {
         viewModelScope.launch {
             getWordUseCase.invoke(word)
-                .collect{ response ->
-                    when(response){
+                .collect { response ->
+                    when (response) {
                         is NetworkResponse.Loading -> _wordDataUiState.postValue(HomeUiState.Loading)
                         is NetworkResponse.Error -> {
                             _wordDataUiState.postValue(HomeUiState.Error(R.string.unknown_error_occured))
@@ -36,6 +37,7 @@ class HomeViewModel @Inject constructor(
 
 
                         }
+
                         is NetworkResponse.Success -> {
                             _wordDataUiState.postValue(HomeUiState.Success(wordMapper.map(response.result)))
                             Log.d("resultt", response.result.word)
@@ -47,5 +49,8 @@ class HomeViewModel @Inject constructor(
     }
 
 
-
 }
+
+
+
+
