@@ -10,13 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.melikeg.engdictionary.R
 import com.melikeg.engdictionary.databinding.FragmentHomeBinding
 import com.melikeg.engdictionary.presentation.adapters.ExamplePagerAdapter
 import com.melikeg.engdictionary.presentation.adapters.MeaningPagerAdapter
 import com.melikeg.engdictionary.showCustomToast
 import com.melikeg.engdictionary.slideLeft
-import com.melikeg.engdictionary.spannable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,7 +62,9 @@ class HomeFragment: Fragment() {
             viewModel.wordDataUiState.observe(viewLifecycleOwner){
                 when(it){
                     is HomeUiState.Loading -> {}
-                    is HomeUiState.Error -> {requireContext().showCustomToast("Invalid word.", R.drawable.baseline_warning_amber_24)}
+                    is HomeUiState.Error -> {
+
+                        requireContext().showCustomToast("Invalid word or network error.", R.drawable.baseline_warning_amber_24)}
                     is HomeUiState.Success -> {
                         binding.tvWord.slideLeft(500L,0)
                         binding.cvPhonetic.slideLeft(500L,0)
@@ -71,13 +73,7 @@ class HomeFragment: Fragment() {
 
                         binding.tvWord.text = it.data.word
 
-                        /*if(it.data.phoneticText.isEmpty()){
-                            binding.tvPhonetic.setTextSize(18f)
-                            binding.tvPhonetic.text = "Can't find any phonetic text."
-                        }
 
-                        else
-                            binding.tvPhonetic.text = it.data.phoneticText.get(0)*/
                         Log.d("audioUrl", it.data.audioUrl.size.toString())
                         Log.d("audioUrl", it.data.phoneticText.size.toString())
 
@@ -96,14 +92,6 @@ class HomeFragment: Fragment() {
                         Log.d("aaa", a.toString())
                         if(a == it.data.audioUrl.size) {
                             binding.tvPhonetic.text = "Can't find any phonetic transcription."
-                          /*  binding.tvPhonetic.textSize = 24f
-
-                            // SP birimini piksellere dönüştürmek için bir ölçek faktörü alın
-                            val scale = resources.displayMetrics.scaledDensity
-
-                            // SP birimini piksellere dönüştürün ve metin boyutunu ayarlayın
-                            val textSizeInPixels = (24f) * scale
-                            binding.tvPhonetic.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizeInPixels)*/
                         }
 
                         binding.linearLayDef.visibility = View.GONE
@@ -146,8 +134,10 @@ class HomeFragment: Fragment() {
     }
 
     fun navigateToWiki(){
-        val direction = HomeFragmentDirections.actionHomeFragmentToWikiFragment()
-        binding.tvMoreInfo.spannable(resources.getString(R.string.click_for_more_info),resources.getString(R.string.click_for_more_info), direction)
+        val action = HomeFragmentDirections.actionHomeFragmentToWikiFragment()
+        binding.btnMoreInfo?.setOnClickListener {
+            findNavController().navigate(action)
+        }
     }
 
 

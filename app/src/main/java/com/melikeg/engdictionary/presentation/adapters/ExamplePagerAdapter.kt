@@ -13,6 +13,7 @@ class ExamplePagerAdapter (fm: FragmentManager, private val meanings: List<Meani
         return meanings.size
     }
 
+
     override fun getItem(position: Int): Fragment {
         val meaning = meanings[position]
         return ExamplesFragment.newInstance(meaning)

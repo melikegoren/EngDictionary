@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
                     when (response) {
                         is NetworkResponse.Loading -> _wordDataUiState.postValue(HomeUiState.Loading)
                         is NetworkResponse.Error -> {
-                            _wordDataUiState.postValue(HomeUiState.Error(R.string.unknown_error_occured))
+                            _wordDataUiState.postValue(HomeUiState.Error(response.exception.toString()))
                             Log.d("errorr", response.exception.toString())
 
 
