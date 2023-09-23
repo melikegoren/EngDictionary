@@ -102,6 +102,11 @@ dependencies {
     implementation "com.github.skydoves:retrofit-adapters-result:1.0.8"
 
 
+    //splash
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
+
+
 }
 
 kapt {

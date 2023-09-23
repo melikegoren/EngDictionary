@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.melikeg.engdictionary.data.dto.Meaning
-import com.melikeg.engdictionary.presentation.home.ExamplesFragment
+import com.melikeg.engdictionary.presentation.home.cardview.ExamplesFragment
 
 class ExamplePagerAdapter (fm: FragmentManager, private val meanings: List<Meaning>) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

@@ -6,16 +6,21 @@
     android:background="@color/white_smoke"
     >
 
+
+
+
     <EditText
         android:id="@+id/searchview"
         android:layout_width="@dimen/_244sdp"
         android:layout_height="@dimen/_36sdp"
         android:text=""
         android:hint="Search for the word"
+        android:textSize="@dimen/_13ssp"
         android:textColorHint="@color/gray"
         android:textColor="@color/raisin_black"
         android:textAlignment="gravity"
         android:drawableStart="@drawable/baseline_search_24"
+        android:drawableEnd="@drawable/baseline_close_24"
         android:padding="@dimen/_10sdp"
         app:queryHint="Search for the word..."
         app:queryBackground="@color/platinum"
@@ -78,13 +83,12 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_phonetic"
-                android:layout_width="@dimen/_234sdp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_70sdp"
                 app:cardCornerRadius="@dimen/_6sdp"
-                app:layout_constraintEnd_toStartOf="@id/btn_audio"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:strokeWidth="0dp">
@@ -113,10 +117,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_audio"
-                android:layout_width="@dimen/_60sdp"
+                android:layout_width="@dimen/_56sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_3sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_14sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:background="@drawable/button_background"
                 android:drawableStart="@drawable/baseline_volume_up_24"
                 android:paddingStart="@dimen/_12sdp"
@@ -161,7 +166,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Definitions"
-                                android:textColor="@color/raisin_black"
+                                android:textColor="@color/onyx"
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:layout_marginBottom="@dimen/_2sdp"
                                 android:fontFamily="sans-serif-condensed"
@@ -176,6 +181,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/_20sdp"
                             app:layout_constraintBottom_toBottomOf="@+id/dots_layout"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -188,10 +194,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/_10sdp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginBottom="@dimen/_10sdp"/>
+                           />
 
 
 
@@ -231,7 +238,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Examples"
-                            android:textColor="@color/raisin_black"
+                            android:textColor="@color/onyx"
                             android:layout_marginTop="@dimen/_2sdp"
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:fontFamily="sans-serif-condensed"
@@ -248,6 +255,7 @@
                         android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="@+id/dots_layout_2"
                         app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginBottom="@dimen/_40sdp"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -257,8 +265,8 @@
                         android:id="@+id/dots_layout_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_10sdp"
                         android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />

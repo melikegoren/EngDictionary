@@ -1,4 +1,4 @@
-package com.melikeg.engdictionary.presentation.home
+package com.melikeg.engdictionary.presentation.home.cardview
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -42,7 +42,7 @@ class ExamplesFragment : Fragment() {
 
         val examplesText = examples.mapIndexed { index, s ->
             var ss = s
-            if(ss.isNullOrEmpty()) ss = "No example for this meaning."
+            if(ss.isNullOrEmpty()) ss = "No example."
             "${index+1}.$ss"
         }.joinToString("\n\n")
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.EngDictionary.MySplash" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">@color/white_smoke</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/eng_dictionary</item>
+        <item name="postSplashScreenTheme">@style/Theme.EngDictionary</item>
+        <item name="splashScreenIconSize">@dimen/_150sdp</item>
+
+    </style>
+
+</resources>

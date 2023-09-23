@@ -1,4 +1,4 @@
-package com.melikeg.engdictionary.presentation.home
+package com.melikeg.engdictionary.presentation.home.cardview
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
