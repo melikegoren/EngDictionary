@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.melikeg.engdictionary.R
 import com.melikeg.engdictionary.common.NetworkResponse
 import com.melikeg.engdictionary.domain.mapper.WordMapper
 import com.melikeg.engdictionary.domain.model.WordItem
@@ -33,9 +32,6 @@ class HomeViewModel @Inject constructor(
                         is NetworkResponse.Loading -> _wordDataUiState.postValue(HomeUiState.Loading)
                         is NetworkResponse.Error -> {
                             _wordDataUiState.postValue(HomeUiState.Error(response.exception.toString()))
-                            Log.d("errorr", response.exception.toString())
-
-
                         }
 
                         is NetworkResponse.Success -> {

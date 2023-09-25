@@ -23,13 +23,13 @@ import com.melikeg.engdictionary.R
 import com.melikeg.engdictionary.databinding.FragmentHomeBinding
 import com.melikeg.engdictionary.presentation.adapters.ExamplePagerAdapter
 import com.melikeg.engdictionary.presentation.adapters.MeaningPagerAdapter
-import com.melikeg.engdictionary.showCustomToast
-import com.melikeg.engdictionary.slideLeft
+import com.melikeg.engdictionary.common.showCustomToast
+import com.melikeg.engdictionary.common.slideLeft
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
@@ -37,9 +37,6 @@ class HomeFragment: Fragment() {
     private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var mediaPlayer: MediaPlayer
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,61 +64,62 @@ class HomeFragment: Fragment() {
     }
 
 
-
     @SuppressLint("SetJavaScriptEnabled")
-    fun bindViewModel(){
+    fun bindViewModel() {
         binding.btnGo.setOnClickListener {
             viewModel.getWord(binding.searchview.text.toString())
 
-            viewModel.wordDataUiState.observe(viewLifecycleOwner){
-                when(it){
+            viewModel.wordDataUiState.observe(viewLifecycleOwner) {
+                when (it) {
                     is HomeUiState.Loading -> {}
                     is HomeUiState.Error -> {
+                        requireContext().showCustomToast(
+                            "Invalid word or network error.",
+                            R.drawable.baseline_warning_amber_24
+                        )
+                    }
 
-                        requireContext().showCustomToast("Invalid word or network error.", R.drawable.baseline_warning_amber_24)}
                     is HomeUiState.Success -> {
-                        binding.tvWord.slideLeft(500L,0)
-                        binding.cvPhonetic.slideLeft(500L,0)
-                        binding.cvMeanings.slideLeft(500L,0)
-                        binding.cvExamples.slideLeft(500L,0)
+                        binding.tvWord.slideLeft(500L, 0)
+                        binding.cvPhonetic.slideLeft(500L, 0)
+                        binding.cvMeanings.slideLeft(500L, 0)
+                        binding.cvExamples.slideLeft(500L, 0)
 
                         binding.tvWord.text = it.data.word
 
 
-
-                        Log.d("audioUrl", it.data.audioUrl.size.toString())
-                        Log.d("audioUrl", it.data.phoneticText.size.toString())
-
                         var a = 0
-                        for(i in 0 until it.data.audioUrl.size){
-                            if(it.data.phoneticText[i].isNullOrEmpty() || it.data.audioUrl[i].isNullOrEmpty()){
+                        for (i in 0 until it.data.audioUrl.size) {
+                            if (it.data.phoneticText[i].isNullOrEmpty() || it.data.audioUrl[i].isNullOrEmpty()) {
                                 a++
                                 continue
-                            }
-                            else{
+                            } else {
                                 binding.tvPhonetic.text = it.data.phoneticText[i]
                                 break
                             }
                         }
 
                         Log.d("aaa", a.toString())
-                        if(a == it.data.audioUrl.size) {
+                        if (a == it.data.audioUrl.size) {
                             binding.tvPhonetic.text = "Can't find any phonetic transcription."
                         }
 
                         binding.linearLayDef.visibility = View.GONE
                         binding.linearLayDef2.visibility = View.GONE
 
-                        val adapterDefinition = MeaningPagerAdapter(childFragmentManager, it.data.meanings)
+                        val adapterDefinition =
+                            MeaningPagerAdapter(childFragmentManager, it.data.meanings)
                         binding.viewpagerMeanings.adapter = adapterDefinition
                         createIndicators(it.data.meanings.size, binding.dotsLayout)
                         Log.d("sizee", it.data.meanings.size.toString())
-                        binding.viewpagerMeanings.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+                        binding.viewpagerMeanings.addOnPageChangeListener(object :
+                            ViewPager.OnPageChangeListener {
                             override fun onPageScrolled(
                                 position: Int,
                                 positionOffset: Float,
                                 positionOffsetPixels: Int
-                            ) {}
+                            ) {
+                            }
 
                             override fun onPageSelected(position: Int) {
                                 setCurrentIndicator(position, binding.dotsLayout)
@@ -131,15 +129,18 @@ class HomeFragment: Fragment() {
 
                         })
 
-                        val adapterExample = ExamplePagerAdapter(childFragmentManager, it.data.meanings)
+                        val adapterExample =
+                            ExamplePagerAdapter(childFragmentManager, it.data.meanings)
                         binding.viewpagerExamples.adapter = adapterExample
                         createIndicators(it.data.meanings.size, binding.dotsLayout2)
-                        binding.viewpagerExamples.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+                        binding.viewpagerExamples.addOnPageChangeListener(object :
+                            ViewPager.OnPageChangeListener {
                             override fun onPageScrolled(
                                 position: Int,
                                 positionOffset: Float,
                                 positionOffsetPixels: Int
-                            ) {}
+                            ) {
+                            }
 
                             override fun onPageSelected(position: Int) {
                                 setCurrentIndicator(position, binding.dotsLayout2)
@@ -154,9 +155,10 @@ class HomeFragment: Fragment() {
             }
         }
 
-        /*binding.btnMoreInfo?.setOnClickListener {
-            viewModel.wordDataUiState.observe(viewLifecycleOwner){
-                when(it) {
+
+        binding.btnAudio.setOnClickListener {
+            viewModel.wordDataUiState.observe(viewLifecycleOwner) {
+                when (it) {
                     is HomeUiState.Loading -> {}
                     is HomeUiState.Error -> {
                         Toast.makeText(requireContext(), "Error occurred.", Toast.LENGTH_LONG)
@@ -164,30 +166,13 @@ class HomeFragment: Fragment() {
                     }
 
                     is HomeUiState.Success -> {
-                        val bottomSheetFragment = CustomBottomSheetFragment()
-                        val url = it.data.sourceUrl
-                        bottomSheetFragment.binding.webView.loadUrl(url)
-                        bottomSheetFragment.show(requireActivity().supportFragmentManager, bottomSheetFragment.tag)
-                    }
-                }
-            }
-        }*/
 
-
-
-        binding.btnAudio.setOnClickListener {
-            viewModel.wordDataUiState.observe(viewLifecycleOwner){
-                when(it){
-                    is HomeUiState.Loading -> {}
-                    is HomeUiState.Error -> {Toast.makeText(requireContext(), "Error occurred.", Toast.LENGTH_LONG).show()}
-                    is HomeUiState.Success -> {
-
-                           for(i in 0 until it.data.audioUrl.size){
-                               if(it.data.audioUrl[i].isNotEmpty()) {
-                                   preparingMediaPlayer(it.data.audioUrl[i])
-                                   break
-                               }
-                           }
+                        for (i in 0 until it.data.audioUrl.size) {
+                            if (it.data.audioUrl[i].isNotEmpty()) {
+                                preparingMediaPlayer(it.data.audioUrl[i])
+                                break
+                            }
+                        }
                     }
                 }
             }
@@ -199,9 +184,8 @@ class HomeFragment: Fragment() {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun clearText(){
+    private fun clearText() {
         binding.searchview.setOnTouchListener { v, event ->
-            val drawableEnd = 2// drawableRight konumunu belirtir
             if (event.action == MotionEvent.ACTION_UP) {
                 val totalPaddingEnd = binding.searchview.totalPaddingEnd
                 val clearButtonStart = binding.searchview.width - totalPaddingEnd
@@ -210,12 +194,13 @@ class HomeFragment: Fragment() {
                     //clearBindings()
                     binding.searchview.text = null
                     return@setOnTouchListener true
-                } }
+                }
+            }
             false
         }
     }
 
-    private fun clearBindings(){
+    private fun clearBindings() {
         binding.tvPhonetic.text = ""
         binding.dotsLayout.removeAllViews()
         binding.dotsLayout2.removeAllViews()
@@ -229,7 +214,6 @@ class HomeFragment: Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
         val dialog = BottomSheetDialog(requireContext())
         dialog.setContentView(dialogView)
-
 
 
         val webView = dialogView.findViewById<WebView>(R.id.webView)
@@ -246,14 +230,15 @@ class HomeFragment: Fragment() {
             dialogView.computeScroll()
 
             webView.webViewClient = MyWebViewClient()
-            viewModel.wordDataUiState.observe(viewLifecycleOwner){
+            viewModel.wordDataUiState.observe(viewLifecycleOwner) {
                 viewModel.getWord(binding.searchview.text.toString())
-                when(it) {
+                when (it) {
                     is HomeUiState.Loading -> {}
                     is HomeUiState.Error -> {
                         Toast.makeText(requireContext(), "Error occurred.", Toast.LENGTH_LONG)
                             .show()
                     }
+
                     is HomeUiState.Success -> {
 
                         val url = it.data.sourceUrl
@@ -265,7 +250,8 @@ class HomeFragment: Fragment() {
 
             dialog.setOnShowListener { dialogInterface ->
                 val bottomSheetDialog = dialogInterface as BottomSheetDialog
-                val bottomSheetInternal = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                val bottomSheetInternal =
+                    bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
                 BottomSheetBehavior.from(dialogView.parent as View).skipCollapsed = true
             }
             dialog.show()
@@ -276,8 +262,6 @@ class HomeFragment: Fragment() {
         closeButton.setOnClickListener {
             dialog.dismiss()
         }
-
-
 
 
     }
@@ -293,8 +277,6 @@ class HomeFragment: Fragment() {
     }
 
 
-
-
     fun preparingMediaPlayer(audioUrl: String) {
 
         val mediaPlayer = MediaPlayer()
@@ -304,8 +286,6 @@ class HomeFragment: Fragment() {
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
         )
-
-
         mediaPlayer.setDataSource(audioUrl)
         mediaPlayer.prepareAsync()
 
@@ -351,5 +331,3 @@ class HomeFragment: Fragment() {
 
 
 }
-
-// ecru   -  #BFA473

@@ -1,4 +1,4 @@
-package com.melikeg.engdictionary
+package com.melikeg.engdictionary.common
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import com.melikeg.engdictionary.R
 
 @SuppressLint("ResourceAsColor")
 fun TextView.spannable(fullText: String, clickableText: String, direction: NavDirections ){
@@ -26,15 +27,13 @@ fun TextView.spannable(fullText: String, clickableText: String, direction: NavDi
 
     val spannableStringBuilder = SpannableStringBuilder(fullText)
 
-    // Add a BackgroundColorSpan to highlight the clickable part
     val backgroundColorSpan = BackgroundColorSpan(Color.TRANSPARENT)
     spannableStringBuilder.setSpan(backgroundColorSpan, startIndex, endIndex, 0)
 
-    val foregroundColorSpan = ForegroundColorSpan(R.color.raisin_black) // Change to the desired color
+    val foregroundColorSpan = ForegroundColorSpan(R.color.raisin_black)
     spannableStringBuilder.setSpan(foregroundColorSpan, startIndex, endIndex, 0)
 
 
-    // Add a ClickableSpan to make the clickable part clickable
     val clickableSpan = object : ClickableSpan() {
         override fun onClick(widget: View) {
            findNavController().navigate(direction)
@@ -42,7 +41,6 @@ fun TextView.spannable(fullText: String, clickableText: String, direction: NavDi
     }
     spannableStringBuilder.setSpan(clickableSpan, startIndex, endIndex, 0)
 
-    // Set the SpannableStringBuilder to the TextView
     this.text = spannableStringBuilder
     this.movementMethod = android.text.method.LinkMovementMethod.getInstance()
 
