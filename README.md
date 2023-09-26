@@ -21,7 +21,7 @@
 SPLASH SCREEN | DEFAULT HOME PAGE |
 --- | --- |
 
-<img width="200" height="400" src="https://github.com/melikegoren/EngDictionary/assets/79282676/a0fb30b8-fe93-404f-954e-e7150b34557d">| <img width="200" height="400" src="https://github.com/melikegoren/EngDictionary/assets/79282676/fd2a3c1a-56be-47bd-a5eb-a9f33c66ee74" >  |
+<img width="200" height="400" src="https://github.com/melikegoren/EngDictionary/assets/79282676/a0fb30b8-fe93-404f-954e-e7150b34557d">| <img width="200" height="400" src="https://github.com/melikegoren/EngDictionary/assets/79282676/1bf52c07-346c-45fd-a378-99d5868eed98" >  |
 
 SEARCH FOR THE WORD "MIND" | WIKTIONARY PAGE FOR "MIND"  
 --- | --- |
