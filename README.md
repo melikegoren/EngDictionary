@@ -28,7 +28,7 @@ SEARCH FOR THE WORD "MIND" | WIKTIONARY PAGE FOR "MIND"
 
 <img width="200" height="400" src="https://github.com/melikegoren/EngDictionary/assets/79282676/109456e5-ebb7-4f1f-9889-beb9c386d5c3"> |  <img width="200" height="400" src="https://github.com/melikegoren/EngDictionary/assets/79282676/58ddc3b2-00d9-4041-9ab0-8a0798befa92"> |
 
-WHEN TYPE INVALID WORD 
+WHEN USER TYPED INVALID WORD 
 --- |
 <img width="200" height="400" src="https://github.com/melikegoren/EngDictionary/assets/79282676/6da13eda-32e2-4a39-9154-7868f794ca2c"> |
 
